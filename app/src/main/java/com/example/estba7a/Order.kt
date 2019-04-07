@@ -5,7 +5,8 @@ import com.google.firebase.database.Exclude
 data class Order (
     val owner : String  = "" ,
     val date : String = "",
-    val items : List<Item> = listOf()){
+    val items : MutableList<Item> = mutableListOf()
+){
     @Exclude
     fun toMap():Map<String,Any?>{
         return mapOf(

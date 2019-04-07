@@ -1,6 +1,5 @@
 package com.example.estba7a.firebase
 
-import android.provider.ContactsContract
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -10,7 +9,7 @@ import io.reactivex.Observable
 
 class RXFirebaseDatabase {
 
-    fun setValue(ref : DatabaseReference , obj : Any): Completable{
+    fun setValue(ref: DatabaseReference, obj: Any):Completable{
         return Completable.create{emitter ->
             ref.setValue(obj)
                 .addOnCompleteListener {
@@ -21,8 +20,7 @@ class RXFirebaseDatabase {
                 }
         }
     }
-
-    fun getOrders(ref : DatabaseReference) : Observable<DataSnapshot>{
+    fun getValues(ref : DatabaseReference) : Observable<DataSnapshot>{
         return Observable.create<DataSnapshot> {emitter ->
             ref.addValueEventListener(object :ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
