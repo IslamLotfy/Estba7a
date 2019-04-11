@@ -5,19 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.estba7a.firebase.RXFirebaseAuthenticator
-import com.example.estba7a.firebase.RXFirebaseDatabase
 import com.example.estba7a.firebase.Repository
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.activity_main.*
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.orders_list_item.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,34 +27,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        val order = MutableLiveData<Order>()
-        repository.getOrderForUserForDay("1No8hjLfLxc4JUCjJvrH9ZhHTGH2","2019-04-06")
+        order_recycler_view.layoutManager = LinearLayoutManager(this)
+        order_recycler_view.adapter = OrderRecycleViewAdapter()
+
+        repository.getAllOrdersForDay("2019-04-07")
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
-                order.postValue(it)
-                Log.d("from repo", it.toString())
-            }, {
-                Log.e("from repo",it.toString())
+                (order_recycler_view.adapter as OrderRecycleViewAdapter).updateOrders(it ?: listOf())
+            },{
+                Log.e("error getting orders",it.toString())
             })
 
-
-//        firebaseAuthenticator.createUserWithEmailAndPassword("islam.m7md.lotfy@gmail.com","111111")
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                Toast.makeText(this, it.email ,Toast.LENGTH_SHORT).show()
-//            },{
-//                Toast.makeText(this,it.stackTrace.toString() ,Toast.LENGTH_SHORT).show()
-//            })
-//        firebaseAuthenticator.sendVerificationCode()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                Toast.makeText(this, "sent " ,Toast.LENGTH_SHORT).show()
-//            },{
-//                Toast.makeText(this,it.stackTrace.toString() ,Toast.LENGTH_SHORT).show()
-//            })
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()

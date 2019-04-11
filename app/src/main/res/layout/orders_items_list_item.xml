@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tool="http://schemas.android.com/tools">
+    <data>
+        <variable name="item" type="com.example.estba7a.Item"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+                android:id="@+id/items_quantity_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{item.quantity}"
+                android:layout_marginEnd="@dimen/tv_margin"
+        />
+        <TextView
+                android:id="@+id/items_name_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/items_quantity_tv"
+                app:layout_constraintBaseline_toBaselineOf="@id/items_quantity_tv"
+                android:text="@{item.name}"
+                android:layout_marginEnd="@dimen/tv_margin"
+        />
+        <TextView
+                android:id="@+id/items_type_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/items_name_tv"
+                app:layout_constraintBaseline_toBaselineOf="@id/items_quantity_tv"
+                android:text="@{item.type}"
+                android:layout_marginEnd="@dimen/tv_margin"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
