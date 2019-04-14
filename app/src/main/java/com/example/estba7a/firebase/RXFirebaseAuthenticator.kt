@@ -4,10 +4,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
 import io.reactivex.Single
+import javax.inject.Inject
 
-class RXFirebaseAuthenticator {
+class RXFirebaseAuthenticator @Inject constructor(private val authenticator: FirebaseAuth) {
 
-    private val authenticator = FirebaseAuth.getInstance()
 
     fun createUserWithEmailAndPassword(email: String, password: String): Single<FirebaseUser> {
         return Single.create<FirebaseUser> { emitter ->

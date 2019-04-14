@@ -6,9 +6,10 @@ import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.Completable
 import io.reactivex.Observable
 import java.util.*
+import javax.inject.Inject
 
-class Repository {
-    private val databaseRef = FirebaseDatabase.getInstance().reference
+class Repository @Inject constructor(private val database: FirebaseDatabase) {
+    private val databaseRef = database.reference
     private val rxFirebaseDatabase = RXFirebaseDatabase()
     private val ordersNode = "orders"
     private val usersNode = "users"

@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.estba7a.firebase.RXFirebaseAuthenticator
 import com.example.estba7a.firebase.Repository
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.orders_list_item.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
-    private val firebaseAuthenticator = RXFirebaseAuthenticator()
-
-    private val repository = Repository()
+    @Inject
+    lateinit var repository : Repository
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
