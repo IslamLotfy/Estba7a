@@ -2,7 +2,7 @@ package com.example.estba7a
 
 import android.app.Activity
 import android.app.Application
-import com.example.estba7a.firebase.DaggerAppComponent
+import com.example.estba7a.DI.DaggerAppComponent
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

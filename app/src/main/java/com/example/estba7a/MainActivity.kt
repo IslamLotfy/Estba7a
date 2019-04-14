@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.estba7a.firebase.RXFirebaseAuthenticator
 import com.example.estba7a.firebase.Repository
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class MainActivity : DaggerAppCompatActivity() {
 
     @Inject
-    lateinit var repository : Repository
+    lateinit var viewModel: OrdersViewModel
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +30,11 @@ class MainActivity : DaggerAppCompatActivity() {
         setSupportActionBar(toolbar)
         order_recycler_view.layoutManager = LinearLayoutManager(this)
         order_recycler_view.adapter = OrderRecycleViewAdapter()
-
-        repository.getAllOrdersForDay("2019-04-07")
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({
-                (order_recycler_view.adapter as OrderRecycleViewAdapter).updateOrders(it ?: listOf())
-            },{
-                Log.e("error getting orders",it.toString())
-            })
+        viewModel.orders.observe(this, Observer { orders ->
+            orders?.let {
+                (order_recycler_view.adapter as OrderRecycleViewAdapter).updateOrders(it)
+            }
+        })
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
